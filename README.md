@@ -171,6 +171,16 @@ Widget build(BuildContext context) {
 }
 ```
 
+Remember to close the `Stream` when it's not used anymore.
+
+```dart
+@override
+void dispose() {
+  super.dispose();
+  bloc.dispose();
+}
+```
+
 ## Demo
 
 Running the demo
