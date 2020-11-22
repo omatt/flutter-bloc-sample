@@ -1,14 +1,16 @@
-# httprestimagegrid
+# Flutter BLoC Sample
 
 HTTP REST Image GridView sample for Flutter using BLoC pattern.
 
 ## Getting Started
 
-This sample app demonstrates the displaying of network images on a GridView using [BLoC pattern][].
+This sample app demonstrates displaying of network images on a GridView using [BLoC pattern][].
 
 BLoC stands for Business Logic Components. The pattern utilizes a [Stream][] where widgets can listen for changes in events using [StreamBuilder][].
 
-Flutter BLoC pattern consists of the UI screen, the BLoC, Repository, and Network Provider. Using this approach, the class containing the UI screen will be clean from methods for implementing Business Logic. API Requests can also be easily reused on other screens. The Repository can also help on keeping track of API Providers set.
+Flutter BLoC pattern consists of the UI screen, the BLoC, Repository, and Network Provider. Using this approach, the class containing the UI screen will be clean from methods for implementing Business Logic. API Requests can also be easily reused on other screens. The Repository can also help in keeping track of API Providers set.
+
+![flutter_bloc_diagram][]
 
 ### Network Provider
 
@@ -177,5 +179,6 @@ Running the demo
 
   [1]: https://i.stack.imgur.com/Jj33q.gif
   [BLoC pattern]: https://flutter.dev/docs/development/data-and-backend/state-mgmt/options#bloc--rx
+  [flutter_bloc_diagram]: https://github.com/omatt/flutter-bloc-sample/blob/main/assets/flutter_bloc.png
   [Stream]: https://api.flutter.dev/flutter/dart-async/Stream-class.html
   [StreamBuilder]: https://api.flutter.dev/flutter/widgets/StreamBuilder-class.html
