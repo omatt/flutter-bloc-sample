@@ -51,6 +51,7 @@ class _MyHomePageState extends State<MyHomePage> {
   @override
   void initState() {
     super.initState();
+    bloc.fetchAlbum();
     _scrollController.addListener(() {
       if (_scrollController.position.atEdge) {
         if (_scrollController.position.pixels == 0)
@@ -66,13 +67,13 @@ class _MyHomePageState extends State<MyHomePage> {
   @override
   void dispose() {
     super.dispose();
+    bloc.dispose();
   }
 
   var _imageGridCursorStart = 0, _imageGridCursorEnd = 21;
 
   @override
   Widget build(BuildContext context) {
-    bloc.fetchAlbum();
     return StreamBuilder(
       stream: bloc.allAlbums,
       builder: (BuildContext context, AsyncSnapshot<List<AlbumModel>> snapshot) {
