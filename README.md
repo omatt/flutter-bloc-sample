@@ -43,9 +43,9 @@ This handles network requests and parses the response data into the Models/Objec
  ]
  ```
 
-Define a Model to handle needed data from the network request.
-
 #### Model
+
+The Model or Object can contain [JSON serialization][] that will create an AlbumModel instance.
 
 ```dart
 class AlbumModel {
@@ -190,5 +190,6 @@ Running the demo
   [1]: https://i.stack.imgur.com/Jj33q.gif
   [BLoC pattern]: https://flutter.dev/docs/development/data-and-backend/state-mgmt/options#bloc--rx
   [flutter_bloc_diagram]: https://github.com/omatt/flutter-bloc-sample/blob/main/assets/flutter_bloc.png
+  [JSON serialization]: https://flutter.dev/docs/development/data-and-backend/json#serializing-json-manually-using-dartconvert
   [Stream]: https://api.flutter.dev/flutter/dart-async/Stream-class.html
   [StreamBuilder]: https://api.flutter.dev/flutter/widgets/StreamBuilder-class.html
