@@ -36,16 +36,18 @@ class _MyHomePageState extends State<MyHomePage> {
   // Succeeding pages should display in rows of 3 for uniformity
   loadMoreImages(bool increment) {
     setState(() {
-      if(!increment) _imageGridCursorEnd = 21;
-      else _imageGridCursorEnd += 21;
+      if (!increment)
+        _imageGridCursorEnd = 21;
+      else
+        _imageGridCursorEnd += 21;
     });
   }
 
   // Call to fetch images
   // if refresh set to true, it will trigger setState() to reset the GridView
-  loadImages(bool refresh){
+  loadImages(bool refresh) {
     bloc.fetchAlbum();
-    if(refresh)loadMoreImages(!refresh); // refresh whole GridView
+    if (refresh) loadMoreImages(!refresh); // refresh whole GridView
   }
 
   @override
@@ -76,7 +78,8 @@ class _MyHomePageState extends State<MyHomePage> {
   Widget build(BuildContext context) {
     return StreamBuilder(
       stream: bloc.allAlbums,
-      builder: (BuildContext context, AsyncSnapshot<List<AlbumModel>> snapshot) {
+      builder:
+          (BuildContext context, AsyncSnapshot<List<AlbumModel>> snapshot) {
         if (snapshot.hasData) {
           // This ensures that the cursor won't exceed List<Album> length
           if (_imageGridCursorEnd > snapshot.data.length)
@@ -93,18 +96,20 @@ class _MyHomePageState extends State<MyHomePage> {
               // RefreshCallback is a Future Function().
               onRefresh: () async => loadImages(true),
               child: snapshot.hasData
-                  ? GridView.count(
-                physics: AlwaysScrollableScrollPhysics(),
-                controller: _scrollController,
-                primary: false,
-                padding: const EdgeInsets.all(20),
-                crossAxisSpacing: 10,
-                mainAxisSpacing: 10,
-                crossAxisCount: 3,
-                children: getListImg(snapshot.data
-                    .getRange(_imageGridCursorStart, _imageGridCursorEnd)
-                    .toList()),
-              )
+                  ? Scrollbar(
+                    child: GridView.count(
+                        physics: AlwaysScrollableScrollPhysics(),
+                        controller: _scrollController,
+                        primary: false,
+                        padding: const EdgeInsets.all(20),
+                        crossAxisSpacing: 10,
+                        mainAxisSpacing: 10,
+                        crossAxisCount: 3,
+                        children: getListImg(snapshot.data
+                            .getRange(_imageGridCursorStart, _imageGridCursorEnd)
+                            .toList()),
+                      ),
+                  )
                   : Text('Waiting...'),
             ),
           ),
@@ -114,7 +119,7 @@ class _MyHomePageState extends State<MyHomePage> {
   }
 
   getListImg(List<AlbumModel> listAlbum) {
-    final listImages = List<Widget>();
+    final List<Widget> listImages = [];
     for (var album in listAlbum) {
       listImages.add(
         Container(
