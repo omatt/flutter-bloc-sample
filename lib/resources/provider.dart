@@ -12,7 +12,7 @@ class AlbumApiProvider {
       // If the server did return a 200 OK response,
       // then parse the JSON.
       Iterable iterableAlbum = json.decode(response.body);
-      var albumList = List<AlbumModel>();
+      List<AlbumModel> albumList = [];
       List<Map<String, dynamic>>.from(iterableAlbum).map((Map model) {
         // Add Album mapped from json to List<Album>
         albumList.add(AlbumModel.fromJson(model));
