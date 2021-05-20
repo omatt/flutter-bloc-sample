@@ -6,7 +6,7 @@ class AlbumApiProvider {
   Future<List<AlbumModel>> fetchAlbum() async {
     print('fetchAlbum()');
     final response =
-    await http.get('https://jsonplaceholder.typicode.com/photos');
+    await http.get(Uri.https('jsonplaceholder.typicode.com', 'photos'));
 
     if (response.statusCode == 200) {
       // If the server did return a 200 OK response,
@@ -15,7 +15,7 @@ class AlbumApiProvider {
       List<AlbumModel> albumList = [];
       List<Map<String, dynamic>>.from(iterableAlbum).map((Map model) {
         // Add Album mapped from json to List<Album>
-        albumList.add(AlbumModel.fromJson(model));
+        albumList.add(AlbumModel.fromJson(model as Map<String, dynamic>));
       }).toList();
       return albumList;
     } else {

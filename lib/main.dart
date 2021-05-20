@@ -21,9 +21,9 @@ class MyApp extends StatelessWidget {
 }
 
 class MyHomePage extends StatefulWidget {
-  MyHomePage({Key key, this.title}) : super(key: key);
+  MyHomePage({Key? key, this.title}) : super(key: key);
 
-  final String title;
+  final String? title;
 
   @override
   _MyHomePageState createState() => _MyHomePageState();
@@ -60,7 +60,11 @@ class _MyHomePageState extends State<MyHomePage> {
           print('Grid scroll at top');
         else {
           print('Grid scroll at bottom');
-          loadMoreImages(true);
+          try {
+            loadMoreImages(true);
+          } catch (e) {
+            debugPrint('Error: $e');
+          }
         }
       }
     });
@@ -82,13 +86,13 @@ class _MyHomePageState extends State<MyHomePage> {
           (BuildContext context, AsyncSnapshot<List<AlbumModel>> snapshot) {
         if (snapshot.hasData) {
           // This ensures that the cursor won't exceed List<Album> length
-          if (_imageGridCursorEnd > snapshot.data.length)
-            _imageGridCursorEnd = snapshot.data.length;
-          debugPrint('Stream snapshot contains ${snapshot.data.length} item/s');
+          if (_imageGridCursorEnd > snapshot.data!.length)
+            _imageGridCursorEnd = snapshot.data!.length;
+          debugPrint('Stream snapshot contains ${snapshot.data!.length} item/s');
         }
         return Scaffold(
           appBar: AppBar(
-            title: Text(widget.title),
+            title: Text(widget.title!),
           ),
           body: Center(
             child: RefreshIndicator(
@@ -97,7 +101,7 @@ class _MyHomePageState extends State<MyHomePage> {
               onRefresh: () async => loadImages(true),
               child: snapshot.hasData
                   ? Scrollbar(
-                    child: GridView.count(
+                      child: GridView.count(
                         physics: AlwaysScrollableScrollPhysics(),
                         controller: _scrollController,
                         primary: false,
@@ -105,11 +109,12 @@ class _MyHomePageState extends State<MyHomePage> {
                         crossAxisSpacing: 10,
                         mainAxisSpacing: 10,
                         crossAxisCount: 3,
-                        children: getListImg(snapshot.data
-                            .getRange(_imageGridCursorStart, _imageGridCursorEnd)
+                        children: getListImg(snapshot.data!
+                            .getRange(
+                                _imageGridCursorStart, _imageGridCursorEnd)
                             .toList()),
                       ),
-                  )
+                    )
                   : Text('Waiting...'),
             ),
           ),
@@ -124,7 +129,7 @@ class _MyHomePageState extends State<MyHomePage> {
       listImages.add(
         Container(
           padding: const EdgeInsets.all(8),
-          child: Image.network(album.albumThumbUrl, fit: BoxFit.cover),
+          child: Image.network(album.albumThumbUrl!, fit: BoxFit.cover),
           // child: Thumbnail(image: imagePath, size: Size(100, 100)),
         ),
       );

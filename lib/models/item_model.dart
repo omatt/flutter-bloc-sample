@@ -1,9 +1,9 @@
 class AlbumModel {
-  final int albumId;
-  final int id;
-  final String title;
-  final String albumImageUrl;
-  final String albumThumbUrl;
+  final int? albumId;
+  final int? id;
+  final String? title;
+  final String? albumImageUrl;
+  final String? albumThumbUrl;
 
   AlbumModel(
       {this.albumId,
