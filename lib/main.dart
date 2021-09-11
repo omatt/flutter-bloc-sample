@@ -31,15 +31,18 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
   var _scrollController = ScrollController();
+  int gridColumnCount = 3;
+  int gridRowCount = 7;
 
   // GridView has 3 columns set
   // Succeeding pages should display in rows of 3 for uniformity
   loadMoreImages(bool increment) {
     setState(() {
+      firstLoad = false;
       if (!increment)
-        _imageGridCursorEnd = 21;
+        _imageGridCursorEnd = gridRowCount * gridColumnCount;
       else
-        _imageGridCursorEnd += 21;
+        _imageGridCursorEnd += gridRowCount * gridColumnCount;
     });
   }
 
@@ -54,6 +57,7 @@ class _MyHomePageState extends State<MyHomePage> {
   void initState() {
     super.initState();
     bloc.fetchAlbum();
+    // Set initial cursor end
     _scrollController.addListener(() {
       if (_scrollController.position.atEdge) {
         if (_scrollController.position.pixels == 0)
@@ -76,10 +80,25 @@ class _MyHomePageState extends State<MyHomePage> {
     bloc.dispose();
   }
 
-  var _imageGridCursorStart = 0, _imageGridCursorEnd = 21;
+  var _imageGridCursorStart = 0, _imageGridCursorEnd = 0;
+  var firstLoad = true;
 
   @override
   Widget build(BuildContext context) {
+    var deviceData = MediaQuery.of(context);
+    var deviceHeight = deviceData.size.height;
+    var deviceWidth = deviceData.size.width;
+    // Estimated size of thumbnails is 150px,
+    // divided by the device's width to determine
+    // the number of columns needed
+    gridColumnCount = (deviceWidth / 150).round();
+    // Check the first instance of loading the grid.
+    // This helps update the number of initial
+    // to be displayed on the grid.
+    if (firstLoad)
+      _imageGridCursorEnd = gridRowCount * gridColumnCount;
+    debugPrint(
+        'Width: $deviceWidth ${(deviceWidth / 150).round()} Height: $deviceHeight');
     return StreamBuilder(
       stream: bloc.allAlbums,
       builder:
@@ -88,7 +107,8 @@ class _MyHomePageState extends State<MyHomePage> {
           // This ensures that the cursor won't exceed List<Album> length
           if (_imageGridCursorEnd > snapshot.data!.length)
             _imageGridCursorEnd = snapshot.data!.length;
-          debugPrint('Stream snapshot contains ${snapshot.data!.length} item/s');
+          debugPrint(
+              'Stream snapshot contains ${snapshot.data!.length} item/s');
         }
         return Scaffold(
           appBar: AppBar(
@@ -108,7 +128,7 @@ class _MyHomePageState extends State<MyHomePage> {
                         padding: const EdgeInsets.all(20),
                         crossAxisSpacing: 10,
                         mainAxisSpacing: 10,
-                        crossAxisCount: 3,
+                        crossAxisCount: gridColumnCount,
                         children: getListImg(snapshot.data!
                             .getRange(
                                 _imageGridCursorStart, _imageGridCursorEnd)
