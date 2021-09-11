@@ -92,13 +92,14 @@ class _MyHomePageState extends State<MyHomePage> {
     // divided by the device's width to determine
     // the number of columns needed
     gridColumnCount = (deviceWidth / 150).round();
+    gridRowCount = (deviceHeight / 150).round();
     // Check the first instance of loading the grid.
     // This helps update the number of initial
     // to be displayed on the grid.
     if (firstLoad)
       _imageGridCursorEnd = gridRowCount * gridColumnCount;
     debugPrint(
-        'Width: $deviceWidth ${(deviceWidth / 150).round()} Height: $deviceHeight');
+        'Width: $deviceWidth $gridColumnCount Height: $gridRowCount');
     return StreamBuilder(
       stream: bloc.allAlbums,
       builder:
