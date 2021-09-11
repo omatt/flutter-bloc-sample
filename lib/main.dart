@@ -92,7 +92,7 @@ class _MyHomePageState extends State<MyHomePage> {
     // divided by the device's width to determine
     // the number of columns needed
     gridColumnCount = (deviceWidth / 150).round();
-    gridRowCount = (deviceHeight / 150).round();
+    gridRowCount = (deviceHeight / 100).round();
     // Check the first instance of loading the grid.
     // This helps update the number of initial
     // to be displayed on the grid.
@@ -122,6 +122,7 @@ class _MyHomePageState extends State<MyHomePage> {
               onRefresh: () async => loadImages(true),
               child: snapshot.hasData
                   ? Scrollbar(
+                controller: _scrollController,
                       child: GridView.count(
                         physics: AlwaysScrollableScrollPhysics(),
                         controller: _scrollController,
