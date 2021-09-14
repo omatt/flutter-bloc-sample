@@ -183,7 +183,7 @@ void dispose() {
 
 ## Demo
 
-Live demo: [https://sample-bloc.web.app/]()
+Live demo: https://sample-bloc.web.app/
 
 Running the demo
 
