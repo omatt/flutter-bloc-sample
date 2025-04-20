@@ -151,8 +151,21 @@ class _MyHomePageState extends State<MyHomePage> {
       listImages.add(
         Container(
           padding: const EdgeInsets.all(8),
-          child: Image.network(album.albumThumbUrl!, fit: BoxFit.cover),
-          // child: Thumbnail(image: imagePath, size: Size(100, 100)),
+          child: Image.network(
+            album.albumThumbUrl!,
+            fit: BoxFit.cover,
+            loadingBuilder: (BuildContext context, Widget child, ImageChunkEvent? loadingProgress) {
+                return Center(
+                  child: Text('Loading...'),
+                );
+            },
+            errorBuilder: (BuildContext context, Object error, StackTrace? stackTrace) {
+              return Text(
+                'Failed to load image ${album.albumThumbUrl!}',
+                style: const TextStyle(color: Colors.red),
+              );
+            },
+          ),
         ),
       );
     }
